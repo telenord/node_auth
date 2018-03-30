@@ -54,10 +54,7 @@ router.post('/register', [
     } else {
       const newUser = new User({name, email, username, password, profileimage});
       User.createUser(newUser, (err, user) => {
-        if (err) {
-          throw err;
-        }
-        console.log(user);
+        if (err) throw err;
       });
 
       req.flash('success', 'You are now registered and can login');
@@ -73,6 +70,17 @@ router.get('/login', function (req, res, next) {
   res.render('login', {title: 'Login'});
 });
 
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.getUserById(id, function(err, user) {
+    done(err, user);
+  });
+});
+
+
 router.post('/login',
   passport.authenticate('local',
     {failureRedirect: '/users/login', failureFlash: 'Invalid username or password'}),
@@ -85,7 +93,6 @@ router.post('/login',
 passport.use(new LocalStrategy(
   function (username, password, done) {
     User.getUserByUsername(username, (err, user) => {
-      console.log(username);
       if (err) throw err;
       if (!user) {
         return done(null, false, {message: 'Unknown user'});
@@ -93,7 +100,7 @@ passport.use(new LocalStrategy(
       User.comparePassword(password, user.password, (err, isMatch) => {
         if (err) throw err;
         if (isMatch) {
-          return done(null, user, {message: 'Unknown user'});
+          return done(null, user);
         } else {
           return done(null, false, {message: 'Invalid password'});
         }
@@ -104,7 +111,9 @@ passport.use(new LocalStrategy(
 ));
 
 router.get('/logout', function (req, res, next) {
-  res.render('logout', {title: 'Logout'});
+  req.logout();
+  req.flash('success', 'You are now logged out');
+  res.redirect('/users/login');
 });
 
 module.exports = router;

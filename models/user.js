@@ -28,13 +28,16 @@ module.exports.createUser = (newUser, cb) => {
   });
 };
 
-module.exports.getUserById = (id, cb) => User.findById(id, cb);
-
-module.exports.getUserByUsername = (username, cb) => {
-  let i = User.findOne({username})
-  console.log(i);
-  // let i = User.findOne({username}, cb)
+module.exports.getUserById = function(id, callback){
+  User.findById(id, callback);
 };
-module.exports.comparePassword = (password, hash, cb) => bcrypt.compareSync(password, hash, (err, isMatch) => {
-  cb(null, isMatch);
-});
+
+module.exports.getUserByUsername = function(username, callback){
+  User.findOne({username: username}, callback);
+};
+
+module.exports.comparePassword = function(candidatePassword, hash, callback){
+  bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
+    callback(null, isMatch);
+  });
+};
