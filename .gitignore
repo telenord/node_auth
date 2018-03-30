@@ -18,3 +18,7 @@ Thumbs.db
 node_modules
 node_modules_
 npm-debug.log
+yarn-error.log
+
+#uploads
+uploads

@@ -2,6 +2,42 @@ doctype html
 html
   head
     title= title
+    link(rel='stylesheet', href='/stylesheets/bootstrap-reboot.min.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap-grid.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    block content
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light
+      a.navbar-brand(href='/') Nodeauth
+      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarSupportedContent.collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+          li.nav-item(class=(title=='Members'? 'active': ''))
+            a.nav-link(href='/')
+              | Members
+              span.sr-only (current)
+          li.nav-item(class=(title=='Register'? 'active': ''))
+            a.nav-link(href='/users/register') Register
+          li.nav-item(class=(title=='Login'? 'active': ''))
+            a.nav-link(href='/users/login') Login
+        ul.navbar-nav.nav-right
+          li.nav-item(class=(title=='Logout'? 'active': ''))
+            a.nav-link(href='/users/logout') Logout
+          //li.nav-item.dropdown
+          //  a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+          //    | Dropdown
+          //  .dropdown-menu(aria-labelledby='navbarDropdown')
+          //    a.dropdown-item(href='#') Action
+          //    a.dropdown-item(href='#') Another action
+          //    .dropdown-divider
+          //    a.dropdown-item(href='#') Something else here
+          //li.nav-item
+          //  a.nav-link.disabled(href='#') Disabled
+    .container
+      != messages()
+      block content
+
+    script(src='/javascripts/jquery-3.0.0.min.js')
+    //script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q', crossorigin='anonymous')
+    script(src='/javascripts/bootstrap.min.js')

@@ -6,3 +6,26 @@ body {
 a {
   color: #00B7FF;
 }
+ul{
+  margin: 0;
+  padding: 0;
+}
+
+ul.success li {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid #d6e9c6;
+  border-radius: 4px;
+  color: #3c763d;
+  background-color: #dff0d8;
+  list-style: none;
+}
+ul.error li {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid #d6e9c6;
+  border-radius: 4px;
+  color: #a94442;
+  background-color: #ebccd1;
+  list-style: none;
+}
